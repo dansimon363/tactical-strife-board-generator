@@ -50,6 +50,9 @@ airportImage.src = "assets/airport.png";
 const factoryImage = new Image();
 factoryImage.src = "assets/factory.png";
 
+const portImage = new Image();
+portImage.src = "assets/port.png";
+
 button.addEventListener("click", generateMap);
 window.addEventListener("load", generateMap);
 
@@ -102,6 +105,8 @@ function drawBoard() {
                 ctx.drawImage(airportImage, drawX, drawY, drawSize, drawSize);
             } else if (terrain === TerrainType.Factory && factoryImage.complete && factoryImage.naturalWidth !== 0) {
                 ctx.drawImage(factoryImage, drawX, drawY, drawSize, drawSize);
+            } else if (terrain === TerrainType.Port && portImage.complete && portImage.naturalWidth !== 0) {
+                ctx.drawImage(portImage, drawX, drawY, drawSize, drawSize);
             } else {
                 ctx.fillStyle = getTerrainColor(terrain);
                 ctx.fillRect(drawX, drawY, drawSize, drawSize);
