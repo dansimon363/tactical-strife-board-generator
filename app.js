@@ -47,6 +47,9 @@ const BOARD_OFFSET_Y = 10;
 const airportImage = new Image();
 airportImage.src = "assets/airport.png";
 
+const factoryImage = new Image();
+factoryImage.src = "assets/factory.png";
+
 button.addEventListener("click", generateMap);
 window.addEventListener("load", generateMap);
 
@@ -97,6 +100,8 @@ function drawBoard() {
 
             if (terrain === TerrainType.Airport && airportImage.complete && airportImage.naturalWidth !== 0) {
                 ctx.drawImage(airportImage, drawX, drawY, drawSize, drawSize);
+            } else if (terrain === TerrainType.Factory && factoryImage.complete && factoryImage.naturalWidth !== 0) {
+                ctx.drawImage(factoryImage, drawX, drawY, drawSize, drawSize);
             } else {
                 ctx.fillStyle = getTerrainColor(terrain);
                 ctx.fillRect(drawX, drawY, drawSize, drawSize);
