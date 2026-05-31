@@ -61,6 +61,7 @@ function generateBoard() {
 
     placeWaterShardsOnGameBoard();
     groupWaterShards();
+    placePortsNextToWaterOnGameBoard();
     fillEmptySpacesWithLandOnGameBoard();
 }
 
@@ -295,6 +296,39 @@ function setWaterOnGameBoard() {
             break;
         }
     }
+}
+
+function placePortsNextToWaterOnGameBoard() {
+    for (let i = 0; i < MAX_NUM_OF_PORTS; i++) {
+        placePortOnGameBoard();
+    }
+}
+
+function placePortOnGameBoard() {
+    let placedPort = false;
+
+    while (!placedPort) {
+        const x = Math.floor(Math.random() * GAME_BOARD_WIDTH);
+        const y = Math.floor(Math.random() * GAME_BOARD_HEIGHT);
+
+        if (validPortSpace(x, y)) {
+            GameBoard[x][y] = TerrainType.Port;
+            placedPort = true;
+        }
+    }
+}
+
+function validPortSpace(x, y) {
+    if (!isEmptySpace(x, y)) {
+        return false;
+    }
+
+    if (isWaterSpace(x, y - 1)) return true;
+    if (isWaterSpace(x + 1, y)) return true;
+    if (isWaterSpace(x, y + 1)) return true;
+    if (isWaterSpace(x - 1, y)) return true;
+
+    return false;
 }
 
 function fillEmptySpacesWithLandOnGameBoard() {
