@@ -44,6 +44,9 @@ const CELL_SIZE = 32;
 const BOARD_OFFSET_X = 10;
 const BOARD_OFFSET_Y = 10;
 
+const airportImage = new Image();
+airportImage.src = "assets/airport.png";
+
 button.addEventListener("click", generateMap);
 window.addEventListener("load", generateMap);
 
@@ -88,13 +91,16 @@ function drawBoard() {
     for (let x = 0; x < GAME_BOARD_WIDTH; x++) {
         for (let y = 0; y < GAME_BOARD_HEIGHT; y++) {
             const terrain = GameBoard[x][y];
-            ctx.fillStyle = getTerrainColor(terrain);
-            ctx.fillRect(
-                BOARD_OFFSET_X + x * CELL_SIZE,
-                BOARD_OFFSET_Y + y * CELL_SIZE,
-                CELL_SIZE - 1,
-                CELL_SIZE - 1
-            );
+            const drawX = BOARD_OFFSET_X + x * CELL_SIZE;
+            const drawY = BOARD_OFFSET_Y + y * CELL_SIZE;
+            const drawSize = CELL_SIZE - 1;
+
+            if (terrain === TerrainType.Airport && airportImage.complete && airportImage.naturalWidth !== 0) {
+                ctx.drawImage(airportImage, drawX, drawY, drawSize, drawSize);
+            } else {
+                ctx.fillStyle = getTerrainColor(terrain);
+                ctx.fillRect(drawX, drawY, drawSize, drawSize);
+            }
         }
     }
 
