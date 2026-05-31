@@ -113,7 +113,7 @@ function getTerrainColor(terrain) {
         case TerrainType.Land:
             return "#c2b280";
         case TerrainType.Water:
-            return "#3a7bd5";
+            return "#39c5bb";
         case TerrainType.Factory:
             return "#888888";
         case TerrainType.Port:
