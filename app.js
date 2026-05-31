@@ -63,6 +63,7 @@ function generateBoard() {
     groupWaterShards();
     placePortsNextToWaterOnGameBoard();
     placeFactoriesOnGameBoard();
+    placeAirportsOnGameBoard();
     fillEmptySpacesWithLandOnGameBoard();
 }
 
@@ -335,6 +336,26 @@ function placeFactoryOnGameBoard() {
         if (isEmptySpace(x, y)) {
             GameBoard[x][y] = TerrainType.Factory;
             placedFactory = true;
+        }
+    }
+}
+
+function placeAirportsOnGameBoard() {
+    for (let i = 0; i < MAX_NUM_OF_AIRPORTS; i++) {
+        placeAirportOnGameBoard();
+    }
+}
+
+function placeAirportOnGameBoard() {
+    let placedAirport = false;
+
+    while (!placedAirport) {
+        const x = Math.floor(Math.random() * GAME_BOARD_WIDTH);
+        const y = Math.floor(Math.random() * GAME_BOARD_HEIGHT);
+
+        if (isEmptySpace(x, y)) {
+            GameBoard[x][y] = TerrainType.Airport;
+            placedAirport = true;
         }
     }
 }
