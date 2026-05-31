@@ -29,6 +29,7 @@ const MAX_NUM_OF_FACTORIES = 5;
 const MAX_NUM_OF_PORTS = 5;
 const MAX_NUM_OF_AIRPORTS = 5;
 const MAX_NUM_OF_WATER = 97;
+const MAX_NUM_OF_GROUP_WATER_SHARDS_FUNCTION_CALLS = 20000;
 const MAX_NUM_OF_HQ_BLUE = 1;
 const MAX_NUM_OF_HQ_GREEN = 1;
 const MAX_NUM_OF_HQ_ORANGE = 1;
@@ -59,6 +60,7 @@ function generateBoard() {
     setHeadquarterOnGameBoard(TerrainType.HeadquartersPurple);
 
     placeWaterShardsOnGameBoard();
+    groupWaterShards();
     fillEmptySpacesWithLandOnGameBoard();
 }
 
@@ -151,6 +153,135 @@ function placeWaterShardsOnGameBoard() {
     for (let i = 0; i < MAX_NUM_OF_WATER; i++) {
         setWaterOnGameBoard();
     }
+}
+
+function groupWaterShards() {
+    const count = Math.floor(Math.random() * MAX_NUM_OF_GROUP_WATER_SHARDS_FUNCTION_CALLS) + 100;
+    for (let i = 0; i < count; i++) {
+        groupWaterShard();
+    }
+}
+
+function groupWaterShard() {
+    const x = Math.floor(Math.random() * GAME_BOARD_WIDTH);
+    const y = Math.floor(Math.random() * GAME_BOARD_HEIGHT);
+
+    if (!isWaterSpace(x, y)) {
+        return;
+    }
+
+    const functionNumber = Math.floor(Math.random() * 8);
+    switch (functionNumber) {
+        case 0:
+            groupWaterShard0(x, y);
+            break;
+        case 1:
+            groupWaterShard1(x, y);
+            break;
+        case 2:
+            groupWaterShard2(x, y);
+            break;
+        case 3:
+            groupWaterShard3(x, y);
+            break;
+        case 4:
+            groupWaterShard4(x, y);
+            break;
+        case 5:
+            groupWaterShard5(x, y);
+            break;
+        case 6:
+            groupWaterShard6(x, y);
+            break;
+        case 7:
+            groupWaterShard7(x, y);
+            break;
+    }
+}
+
+function groupWaterShard0(x, y) {
+    if (!validWaterSpace(x - 1, y + 1)) {
+        return;
+    }
+
+    if (isWaterSpace(x - 2, y + 1) || isWaterSpace(x - 2, y + 2) || isWaterSpace(x - 1, y + 2)) {
+        moveWaterShard(x, y, x - 1, y + 1);
+    }
+}
+
+function groupWaterShard1(x, y) {
+    if (!validWaterSpace(x, y + 1)) {
+        return;
+    }
+
+    if (isWaterSpace(x - 1, y + 2) || isWaterSpace(x, y + 2) || isWaterSpace(x + 1, y + 2)) {
+        moveWaterShard(x, y, x, y + 1);
+    }
+}
+
+function groupWaterShard2(x, y) {
+    if (!validWaterSpace(x + 1, y + 1)) {
+        return;
+    }
+
+    if (isWaterSpace(x + 1, y + 2) || isWaterSpace(x + 2, y + 2) || isWaterSpace(x + 2, y + 1)) {
+        moveWaterShard(x, y, x + 1, y + 1);
+    }
+}
+
+function groupWaterShard3(x, y) {
+    if (!validWaterSpace(x + 1, y)) {
+        return;
+    }
+
+    if (isWaterSpace(x + 2, y + 1) || isWaterSpace(x + 2, y) || isWaterSpace(x + 2, y - 1)) {
+        moveWaterShard(x, y, x + 1, y);
+    }
+}
+
+function groupWaterShard4(x, y) {
+    if (!validWaterSpace(x + 1, y - 1)) {
+        return;
+    }
+
+    if (isWaterSpace(x + 2, y - 1) || isWaterSpace(x + 2, y - 2) || isWaterSpace(x + 1, y - 2)) {
+        moveWaterShard(x, y, x + 1, y - 1);
+    }
+}
+
+function groupWaterShard5(x, y) {
+    if (!validWaterSpace(x, y - 1)) {
+        return;
+    }
+
+    if (isWaterSpace(x + 1, y - 2) || isWaterSpace(x, y - 2) || isWaterSpace(x - 1, y - 2)) {
+        moveWaterShard(x, y, x, y - 1);
+    }
+}
+
+function groupWaterShard6(x, y) {
+    if (!validWaterSpace(x - 1, y - 1)) {
+        return;
+    }
+
+    if (isWaterSpace(x - 1, y - 2) || isWaterSpace(x - 2, y - 2) || isWaterSpace(x - 2, y - 1)) {
+        moveWaterShard(x, y, x - 1, y - 1);
+    }
+}
+
+function groupWaterShard7(x, y) {
+    if (!validWaterSpace(x - 1, y)) {
+        return;
+    }
+
+    if (isWaterSpace(x - 2, y - 1) || isWaterSpace(x - 2, y) || isWaterSpace(x - 2, y + 1)) {
+        moveWaterShard(x, y, x - 1, y);
+    }
+}
+
+function moveWaterShard(sourceX, sourceY, destinationX, destinationY) {
+    GameBoard[sourceX][sourceY] = TerrainType.NotSet;
+    GameBoard[destinationX][destinationY] = TerrainType.Water;
 }
 
 function setWaterOnGameBoard() {
