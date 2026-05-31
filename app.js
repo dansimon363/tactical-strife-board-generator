@@ -62,6 +62,7 @@ function generateBoard() {
     placeWaterShardsOnGameBoard();
     groupWaterShards();
     placePortsNextToWaterOnGameBoard();
+    placeFactoriesOnGameBoard();
     fillEmptySpacesWithLandOnGameBoard();
 }
 
@@ -314,6 +315,26 @@ function placePortOnGameBoard() {
         if (validPortSpace(x, y)) {
             GameBoard[x][y] = TerrainType.Port;
             placedPort = true;
+        }
+    }
+}
+
+function placeFactoriesOnGameBoard() {
+    for (let i = 0; i < MAX_NUM_OF_FACTORIES; i++) {
+        placeFactoryOnGameBoard();
+    }
+}
+
+function placeFactoryOnGameBoard() {
+    let placedFactory = false;
+
+    while (!placedFactory) {
+        const x = Math.floor(Math.random() * GAME_BOARD_WIDTH);
+        const y = Math.floor(Math.random() * GAME_BOARD_HEIGHT);
+
+        if (isEmptySpace(x, y)) {
+            GameBoard[x][y] = TerrainType.Factory;
+            placedFactory = true;
         }
     }
 }
