@@ -53,6 +53,9 @@ factoryImage.src = "assets/factory.png";
 const portImage = new Image();
 portImage.src = "assets/port.png";
 
+const waterImage = new Image();
+waterImage.src = "assets/water.png";
+
 button.addEventListener("click", generateMap);
 window.addEventListener("load", generateMap);
 
@@ -107,6 +110,8 @@ function drawBoard() {
                 ctx.drawImage(factoryImage, drawX, drawY, drawSize, drawSize);
             } else if (terrain === TerrainType.Port && portImage.complete && portImage.naturalWidth !== 0) {
                 ctx.drawImage(portImage, drawX, drawY, drawSize, drawSize);
+            } else if (terrain === TerrainType.Water && waterImage.complete && waterImage.naturalWidth !== 0) {
+                ctx.drawImage(waterImage, drawX, drawY, drawSize, drawSize);
             } else {
                 ctx.fillStyle = getTerrainColor(terrain);
                 ctx.fillRect(drawX, drawY, drawSize, drawSize);
