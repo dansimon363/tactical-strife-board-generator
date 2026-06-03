@@ -336,7 +336,7 @@ function placePortOnGameBoard() {
         const x = Math.floor(Math.random() * GAME_BOARD_WIDTH);
         const y = Math.floor(Math.random() * GAME_BOARD_HEIGHT);
 
-        if (validPortSpace(x, y)) {
+        if (validPortSpace(x, y) && !isAdjacentHQ(x, y)) {
             GameBoard[x][y] = TerrainType.Port;
             placedPort = true;
         }
@@ -356,7 +356,7 @@ function placeFactoryOnGameBoard() {
         const x = Math.floor(Math.random() * GAME_BOARD_WIDTH);
         const y = Math.floor(Math.random() * GAME_BOARD_HEIGHT);
 
-        if (isEmptySpace(x, y)) {
+        if (isEmptySpace(x, y) && !isAdjacentHQ(x, y)) {
             GameBoard[x][y] = TerrainType.Factory;
             placedFactory = true;
         }
@@ -376,7 +376,7 @@ function placeAirportOnGameBoard() {
         const x = Math.floor(Math.random() * GAME_BOARD_WIDTH);
         const y = Math.floor(Math.random() * GAME_BOARD_HEIGHT);
 
-        if (isEmptySpace(x, y)) {
+        if (isEmptySpace(x, y) && !isAdjacentHQ(x, y)) {
             GameBoard[x][y] = TerrainType.Airport;
             placedAirport = true;
         }
@@ -423,6 +423,12 @@ function validHQSpace(x, y) {
     }
 
     return true;
+}
+
+function isAdjacentHQ(x, y) {
+    return isHQSpace(x - 1, y - 1) || isHQSpace(x, y - 1) || isHQSpace(x + 1, y - 1) ||
+           isHQSpace(x - 1, y) || isHQSpace(x + 1, y) || isHQSpace(x - 1, y + 1) ||
+           isHQSpace(x, y + 1) || isHQSpace(x + 1, y + 1);
 }
 
 function validWaterSpace(x, y) {
