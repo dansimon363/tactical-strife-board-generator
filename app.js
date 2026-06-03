@@ -28,6 +28,7 @@ const GAME_BOARD_HEIGHT = 16;
 const MAX_NUM_OF_FACTORIES = 5;
 const MAX_NUM_OF_PORTS = 5;
 const MAX_NUM_OF_AIRPORTS = 5;
+const MIN_NUM_OF_WATER = 40;
 const MAX_NUM_OF_WATER = 97;
 const MAX_NUM_OF_GROUP_WATER_SHARDS_FUNCTION_CALLS = 20000;
 const MAX_NUM_OF_HQ_BLUE = 1;
@@ -174,7 +175,8 @@ function setHeadquarterOnGameBoard(hq) {
 }
 
 function placeWaterShardsOnGameBoard() {
-    for (let i = 0; i < MAX_NUM_OF_WATER; i++) {
+    const randomWaterCount = Math.floor(Math.random() * (MAX_NUM_OF_WATER - MIN_NUM_OF_WATER + 1)) + MIN_NUM_OF_WATER;
+    for (let i = 0; i < randomWaterCount; i++) {
         setWaterOnGameBoard();
     }
 }
