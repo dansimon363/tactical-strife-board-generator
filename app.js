@@ -422,6 +422,16 @@ function validHQSpace(x, y) {
         }
     }
 
+    for (let offsetX = -2; offsetX <= 2; offsetX++) {
+        for (let offsetY = -2; offsetY <= 2; offsetY++) {
+            if (offsetX === 0 && offsetY === 0) continue;
+            if (Math.abs(offsetX) <= 1 && Math.abs(offsetY) <= 1) continue;
+            if (isHQSpace(x + offsetX, y + offsetY)) {
+                return false;
+            }
+        }
+    }
+
     return true;
 }
 
