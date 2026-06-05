@@ -2,6 +2,11 @@
 const canvas = document.getElementById("mapCanvas");
 const ctx = canvas.getContext("2d");
 
+const hqBlueCheckbox = document.getElementById("hqBlue");
+const hqGreenCheckbox = document.getElementById("hqGreen");
+const hqOrangeCheckbox = document.getElementById("hqOrange");
+const hqPurpleCheckbox = document.getElementById("hqPurple");
+
 const TerrainType = Object.freeze({
     NotSet: 0,
     Land: 1,
@@ -61,9 +66,15 @@ button.addEventListener("click", generateMap);
 window.addEventListener("load", generateMap);
 
 function generateMap() {
+    const selectedHQs = getSelectedHeadquarters();
+    if (selectedHQs.length < 2) {
+        alert("Please select between 2 and 4 HQs to generate a map.");
+        return;
+    }
+
     initializeBoard();
     resizeCanvasToBoard();
-    generateBoard();
+    generateBoard(selectedHQs);
     drawBoard();
 }
 
@@ -77,11 +88,10 @@ function resizeCanvasToBoard() {
     }
 }
 
-function generateBoard() {
-    setHeadquarterOnGameBoard(TerrainType.HeadquartersBlue);
-    setHeadquarterOnGameBoard(TerrainType.HeadquartersGreen);
-    setHeadquarterOnGameBoard(TerrainType.HeadquartersOrange);
-    setHeadquarterOnGameBoard(TerrainType.HeadquartersPurple);
+function generateBoard(selectedHQs) {
+    for (const hq of selectedHQs) {
+        setHeadquarterOnGameBoard(hq);
+    }
 
     placeWaterShardsOnGameBoard();
     groupWaterShards();
@@ -496,4 +506,21 @@ function isHQSpace(x, y) {
         type === TerrainType.HeadquartersGreen ||
         type === TerrainType.HeadquartersOrange ||
         type === TerrainType.HeadquartersPurple;
+}
+
+function getSelectedHeadquarters() {
+    const selected = [];
+    if (hqBlueCheckbox && hqBlueCheckbox.checked) {
+        selected.push(TerrainType.HeadquartersBlue);
+    }
+    if (hqGreenCheckbox && hqGreenCheckbox.checked) {
+        selected.push(TerrainType.HeadquartersGreen);
+    }
+    if (hqOrangeCheckbox && hqOrangeCheckbox.checked) {
+        selected.push(TerrainType.HeadquartersOrange);
+    }
+    if (hqPurpleCheckbox && hqPurpleCheckbox.checked) {
+        selected.push(TerrainType.HeadquartersPurple);
+    }
+    return selected;
 }
