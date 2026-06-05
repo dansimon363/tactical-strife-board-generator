@@ -159,7 +159,7 @@ function drawBoard() {
 function getTerrainColor(terrain) {
     switch (terrain) {
         case TerrainType.Land:
-            return "#c2b280";
+            return "#ffffff";
         case TerrainType.Water:
             return "#39c5bb";
         case TerrainType.Factory:
