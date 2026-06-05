@@ -5,6 +5,24 @@ body {
     color: white;
 }
 
+a {
+    display: block;
+    margin: 10px 0;
+    color: #87ceeb;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
 canvas {
     display: block;
     border: 2px solid white;
