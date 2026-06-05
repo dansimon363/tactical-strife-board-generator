@@ -62,8 +62,19 @@ window.addEventListener("load", generateMap);
 
 function generateMap() {
     initializeBoard();
+    resizeCanvasToBoard();
     generateBoard();
     drawBoard();
+}
+
+function resizeCanvasToBoard() {
+    const desiredWidth = BOARD_OFFSET_X * 2 + GAME_BOARD_WIDTH * CELL_SIZE;
+    const desiredHeight = BOARD_OFFSET_Y * 2 + GAME_BOARD_HEIGHT * CELL_SIZE;
+
+    if (canvas.width !== desiredWidth || canvas.height !== desiredHeight) {
+        canvas.width = desiredWidth;
+        canvas.height = desiredHeight;
+    }
 }
 
 function generateBoard() {
